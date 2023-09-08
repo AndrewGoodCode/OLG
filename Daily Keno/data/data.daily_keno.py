@@ -2,9 +2,23 @@ import json
 from collections import Counter
 
 # Load the analysis data from the JSON file
-analysis_file_path = 'data.daily_keno.json'  # Updated path
-with open(analysis_file_path, 'r') as f:
-    analysis_data = json.load(f)
+analysis_file_path = 'data.daily_keno.json'
+try:
+    with open(analysis_file_path, 'r') as f:
+        analysis_data = json.load(f)
+except FileNotFoundError:
+    print(f"File {analysis_file_path} not found. Exiting.")
+    exit(1)
+
+# Determine if the upcoming draw is in the morning or evening
+upcoming_draw_is_morning = True  # Replace with your actual logic
+draw_time = 'm' if upcoming_draw_is_morning else 'e'
+
+# Check if the frequency key exists in the analysis data
+key = f'frequency_{draw_time}'
+if key not in analysis_data:
+    print(f"Key {key} not found in analysis data. Creating it.")
+    analysis_data[key] = {}
 
 # Check if the upcoming draw is in the morning (you can replace 'morning' with your actual logic)
 upcoming_draw_is_morning = True  # Update this with your logic

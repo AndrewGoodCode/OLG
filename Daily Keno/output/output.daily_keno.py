@@ -5,14 +5,23 @@ from collections import Counter
 # Print the current working directory for debugging
 print("Current Working Directory:", os.getcwd())
 
+# Define the file paths
+analysis_file_path = os.path.join(os.getcwd(), 'data', 'data.daily_keno.json')
+daily_keno_numbers_file_path = os.path.join(os.getcwd(), 'data', 'daily_keno_numbers.json')
+output_file_path = os.path.join(os.getcwd(), 'output', 'output.daily_keno.json')
+
+# Check if the analysis file exists
+if not os.path.exists(analysis_file_path):
+    print(f"Analysis file {analysis_file_path} not found. Exiting.")
+    exit(1)
+
 # Load the analysis data from the JSON file
-analysis_file_path = './data.daily_keno.json'  # Since the script is running from the 'data' directory
 with open(analysis_file_path, 'r') as f:
     analysis_data = json.load(f)
 
 # Determine if the upcoming draw is in the morning or evening
 upcoming_draw_is_morning = True  # Replace with your actual logic
-draw_time = "m" if upcoming_draw_is_morning else "e"
+draw_time = 'm' if upcoming_draw_is_morning else 'e'
 
 # Check if the frequency key exists in the analysis data
 key = f'frequency_{draw_time}'
@@ -30,20 +39,23 @@ most_likely_numbers = dict(sorted(frequency_dict.items(), key=lambda item: item[
 least_likely_numbers = dict(sorted(frequency_dict.items(), key=lambda item: item[1])[:20])
 
 # Attach draw date and time to the suggested numbers
-most_likely_numbers_with_time = {number: {"frequency": frequency, "draw_time": draw_time} for number, frequency in most_likely_numbers.items()}
-least_likely_numbers_with_time = {number: {"frequency": frequency, "draw_time": draw_time} for number, frequency in least_likely_numbers.items()}
+most_likely_numbers_with_time = {number: {'frequency': frequency, 'draw_time': draw_time} for number, frequency in most_likely_numbers.items()}
+least_likely_numbers_with_time = {number: {'frequency': frequency, 'draw_time': draw_time} for number, frequency in least_likely_numbers.items()}
 
 # Save the most likely and least likely numbers with date and time to a JSON file
-output_file_path = './output/output.daily_keno.json'
 with open(output_file_path, 'w') as output_file:
     output_data = {
-        "most_likely_numbers": most_likely_numbers_with_time,
-        "least_likely_numbers": least_likely_numbers_with_time,
+        'most_likely_numbers': most_likely_numbers_with_time,
+        'least_likely_numbers': least_likely_numbers_with_time,
     }
     json.dump(output_data, output_file, indent=4)
 
+# Check if the daily keno numbers file exists
+if not os.path.exists(daily_keno_numbers_file_path):
+    print(f"Daily Keno numbers file {daily_keno_numbers_file_path} not found. Exiting.")
+    exit(1)
+
 # Load the Daily Keno numbers data from the JSON file
-daily_keno_numbers_file_path = './daily_keno_numbers.json'
 with open(daily_keno_numbers_file_path, 'r') as daily_keno_file:
     daily_keno_data = json.load(daily_keno_file)
 
@@ -60,8 +72,8 @@ least_frequent_day_numbers = dict(sorted(day_frequency.items(), key=lambda item:
 # Append the most and least frequent numbers for the day to the same output file
 with open(output_file_path, 'a') as output_file:
     output_data = {
-        "most_frequent_day_numbers": most_frequent_day_numbers,
-        "least_frequent_day_numbers": least_frequent_day_numbers,
+        'most_frequent_day_numbers': most_frequent_day_numbers,
+        'least_frequent_day_numbers': least_frequent_day_numbers,
     }
     json.dump(output_data, output_file, indent=4)
 

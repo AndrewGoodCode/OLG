@@ -36,7 +36,7 @@ def scrape_numbers():
         print(f'An error occurred: {e}')
 
 schedule.every().day.at('16:00').do(scrape_numbers)
-schedule.every().day.at('23:59').do(scrape_numbers)
+schedule.every().day.at('23:49').do(scrape_numbers)
 
 while True:
     schedule.run_pending()

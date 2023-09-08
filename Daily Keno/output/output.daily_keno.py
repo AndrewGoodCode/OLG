@@ -7,7 +7,7 @@ print("Current Working Directory:", os.getcwd())
 
 # Define the file paths
 analysis_file_path = os.path.join(os.getcwd(), 'data.daily_keno.json')
-daily_keno_numbers_file_path = os.path.join(os.getcwd(), 'daily_keno_numbers.json')
+daily_keno_numbers_file_path = os.path.join(os.path.dirname(os.getcwd()), 'daily_keno_numbers.json')
 output_file_path = os.path.join(os.getcwd(), 'output.daily_keno.json')
 
 # Check if the analysis file exists

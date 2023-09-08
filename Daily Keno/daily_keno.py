@@ -9,7 +9,6 @@ import schedule
 
 daily_keno_numbers = []
 
-# Load existing data if the JSON file exists
 def load_existing_data():
     json_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'daily_keno_numbers.json')
     if os.path.exists(json_file_path):

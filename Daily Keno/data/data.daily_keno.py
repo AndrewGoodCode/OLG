@@ -20,16 +20,8 @@ if key not in analysis_data:
     print(f"Key {key} not found in analysis data. Creating it.")
     analysis_data[key] = {}
 
-# Check if the upcoming draw is in the morning (you can replace 'morning' with your actual logic)
-upcoming_draw_is_morning = True  # Update this with your logic
-
 # Get the frequency dictionary based on the time of day
-if upcoming_draw_is_morning:
-    frequency_dict = analysis_data['frequency_morning']
-    draw_time = "m"
-else:
-    frequency_dict = analysis_data['frequency_evening']
-    draw_time = "e"
+frequency_dict = analysis_data[key]
 
 # Select the 20 numbers with the highest frequency
 most_likely_numbers = dict(sorted(frequency_dict.items(), key=lambda item: item[1], reverse=True)[:20])

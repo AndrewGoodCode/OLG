@@ -5,12 +5,11 @@ from collections import Counter
 # Print the current working directory for debugging
 print("Current Working Directory:", os.getcwd())
 
+# Define the paths
 script_dir = os.path.dirname(os.path.abspath(__file__))
-
-analysis_file_path = os.path.join(script_dir, '../data/data.daily_keno.json')
-daily_keno_numbers_file_path = os.path.join(script_dir, '../daily_keno_numbers.json')
-output_file_path = os.path.join(script_dir, 'output.daily_keno.json')
-
+analysis_file_path = os.path.join(os.getcwd(), 'data.daily_keno.json')
+daily_keno_numbers_file_path = os.path.join(os.path.dirname(os.getcwd()), 'daily_keno_numbers.json')
+output_file_path = os.path.join(os.getcwd(), 'output.daily_keno.json')
 
 # Check if the analysis file exists
 if not os.path.exists(analysis_file_path):
@@ -62,14 +61,20 @@ with open(daily_keno_numbers_file_path, 'r') as daily_keno_file:
     daily_keno_data = json.load(daily_keno_file)
 
 # Analyze the most and least frequent numbers for the day
+# Initialize a Counter object to store the frequency of each number
 day_frequency = Counter()
+
+# Update the frequency counter with the numbers from each draw
 for entry in daily_keno_data:
     numbers = entry['numbers']
     day_frequency.update(numbers)
 
-# Select the 20 most and least frequent numbers for the day
+# Get the 20 most frequent numbers for the day
 most_frequent_day_numbers = dict(day_frequency.most_common(20))
-least_frequent_day_numbers = dict(sorted(day_frequency.items(), key=lambda item: item[1])[:20])
+
+# Get the 20 least frequent numbers for the day
+# Filter out numbers that are also in the most frequent list
+least_frequent_day_numbers = {k: v for k, v in sorted(day_frequency.items(), key=lambda item: item[1]) if k not in most_frequent_day_numbers.keys()}[:20]
 
 # Append the most and least frequent numbers for the day to the same output file
 with open(output_file_path, 'a') as output_file:

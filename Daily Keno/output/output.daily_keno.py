@@ -3,13 +3,15 @@ import os
 from collections import Counter
 
 # Print the current working directory for debugging
-print("Current Working Directory:", os.getcwd())
+print('Current Working Directory:', os.getcwd())
 
 # Define the paths
 script_dir = os.path.dirname(os.path.abspath(__file__))
-analysis_file_path = os.path.join(os.getcwd(), 'data.daily_keno.json')
-daily_keno_numbers_file_path = os.path.join(os.path.dirname(os.getcwd()), 'daily_keno_numbers.json')
-output_file_path = os.path.join(os.getcwd(), 'output.daily_keno.json')
+root_dir = os.path.dirname(script_dir)
+
+analysis_file_path = os.path.join(root_dir, 'data', 'data.daily_keno.json')
+daily_keno_numbers_file_path = os.path.join(root_dir, 'daily_keno_numbers.json')
+output_file_path = os.path.join(script_dir, 'output.daily_keno.json')
 
 # Check if the analysis file exists
 if not os.path.exists(analysis_file_path):

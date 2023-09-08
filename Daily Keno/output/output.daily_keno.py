@@ -76,7 +76,8 @@ most_frequent_day_numbers = dict(day_frequency.most_common(20))
 
 # Get the 20 least frequent numbers for the day
 # Filter out numbers that are also in the most frequent list
-least_frequent_day_numbers = {k: v for k, v in sorted(day_frequency.items(), key=lambda item: item[1]) if k not in most_frequent_day_numbers.keys()}[:20]
+least_frequent_day_numbers = {k: v for k, v in sorted(day_frequency.items(), key=lambda item: item[1]) if k not in most_frequent_day_numbers.keys()}
+least_frequent_day_numbers = dict(list(least_frequent_day_numbers.items())[:20])
 
 # Append the most and least frequent numbers for the day to the same output file
 with open(output_file_path, 'a') as output_file:
